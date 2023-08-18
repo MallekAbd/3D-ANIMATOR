@@ -37,7 +37,7 @@
       "minify": true,
       "format": "esm",
       "platform": "browser",
-      "banner": { "js": "/*\n  Human: Motion Analytics Demo\n  author: <https://github.com/vladmandic>'\n*/\n" }
+      "banner": { "js": "/*\n  ANIMATOR: Where AI Meets Ergonomics'\n*/\n" }
     },
     "targets": [
       {
