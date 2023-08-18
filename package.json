@@ -1,17 +1,15 @@
 {
-  "name": "human-motion",
-  "description": "Realtime Face/Pose/Hand Motion 3D Model Visualization and 2D Overlay for using Human Library and BabylonJS",
-  "license": "MIT",
-  "author": "Vladimir Mandic <mandic00@live.com>",
+  "name": "ANIMATOR",
+  "description": "Realtime Face/Pose/Hand Motion 3D Tracking and Visualising for the aim of ergonomic assessment ",
+  "author": "Mallek Abdelmalek <mallek.abdelmalek.ds>",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vladmandic/human-motion.git"
+    "url": "git+https://github.com/MallekAbd/3D-ANIMATOR.git"
   },
   "bugs": {
-    "url": "https://github.com/vladmandic/human-motion/issues"
+    "url": "https://github.com/MallekAbd/3D-ANIMATOR/issues"
   },
-  "homepage": "https://github.com/vladmandic/human-motion#readme",
   "scripts": {
     "start": "build --profile serve",
     "build": "build --profile production",
