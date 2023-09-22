@@ -1,7 +1,7 @@
 {
   "name": "ANIMATOR",
   "description": "Realtime Face/Pose/Hand Motion 3D Tracking and Visualising for the aim of ergonomic assessment ",
-  "author": "Mallek Abdelmalek <mallek.abdelmalek.ds>",
+  "author": "Mallek Abdelmalek <mallek.abdelmalek.ds@gmail.com>",
   "version": "0.1.0",
   "repository": {
     "type": "git",
