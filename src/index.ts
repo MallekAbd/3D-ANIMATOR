@@ -15,10 +15,10 @@ const samples = [
   { label: '[select input]', type: 'none' },
   { label: 'Live WebCam', type: 'webcam' },
   { label: 'Upload Video', type: 'upload' },
-  { label: 'Sample: Face', url: '../assets/FaceModel.webm', type: 'video' },
-  { label: 'Sample: Body', url: '../assets/BaseballPitch.webm', type: 'video' },
-  { label: 'Sample: Hand', url: '../assets/ASLSignAlphabet.webm', type: 'video' },
-  { label: 'Sample: manufacturing', url: '../assets/4.webm', type: 'video' }
+  { label: 'Sample: Face', url: 'assets/FaceModel.webm', type: 'video' },
+  { label: 'Sample: Body', url: 'assets/BaseballPitch.webm', type: 'video' },
+  { label: 'Sample: Hand', url: 'assets/ASLSignAlphabet.webm', type: 'video' },
+  { label: 'Sample: manufacturing', url: 'assets/4.webm', type: 'video' }
 ];
 
 // basic human configuration // all models are initially disabled as enabling is via ui
@@ -233,7 +233,7 @@ async function main() {
   await mesh.init(dom.outputMesh, human.faceTriangulation, human.faceUVMap);
   dom.status.innerText = 'ready...';
   if (useWebWorker) {
-    worker = new Worker('../dist/worker.js'); // processing is done inside web worker
+    worker = new Worker('dist/worker.js'); // processing is done inside web worker
     worker.onmessage = receiveMessage; // listen to messages from worker thread
     worker.postMessage({ config }); // send initial message to worker thread so it can initialize
   } else {

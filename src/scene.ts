@@ -81,16 +81,16 @@ export class MyScene {
     // environment
     if (this.environment) this.environment.dispose();
     this.environment = this.scene.createDefaultEnvironment({
-      environmentTexture: '../assets/scene-environment.env',
+      environmentTexture: 'assets/scene-environment.env',
       createSkybox: true,
-      skyboxTexture: '../assets/scene-skybox.dds',
+      skyboxTexture: 'assets/scene-skybox.dds',
       skyboxColor: new Color3(0.0, 0.0, 0.0),
       skyboxSize: 100,
       createGround: true,
       groundColor: new Color3(1.0, 1.0, 1.0),
       groundSize: 10,
       groundShadowLevel: 0.1,
-      groundTexture: '../assets/scene-ground.png',
+      groundTexture: 'assets/scene-ground.png',
       enableGroundShadow: true,
     }) as EnvironmentHelper;
     // lights

@@ -25,7 +25,7 @@
     "httpPort": 9000,
     "httpsPort": 9001,
     "documentRoot": ".",
-    "defaultFolder": "src",
+    "defaultFolder": ".",
     "defaultFile": "index.html"
   },
   "build": {
