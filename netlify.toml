@@ -1,6 +1,6 @@
 [build]
+  command = "npm install && npm run build"
   publish = "."
-  ignore = "exit 0"
 
 [[headers]]
   for = "/*"
