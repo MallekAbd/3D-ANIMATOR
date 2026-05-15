@@ -128,7 +128,11 @@
       min-height: 24px;
       flex-shrink: 0;
       white-space: pre;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+
+    #status.error { color: #f85149; }
 
     .canvas-container {
       display: flex;
@@ -166,22 +170,32 @@
       display: block;
     }
 
+    /* Video preview: small inset bottom-left of overlay canvas */
     #video {
-      display: none;
       position: absolute;
+      bottom: 8px;
+      left: 8px;
+      width: 160px;
+      height: auto;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      z-index: 20;
+      background: #000;
+      display: none; /* shown via JS once loaded */
     }
 
     #file-input { display: none; }
 
-    .webcam-notice {
+    #hint {
       position: absolute;
-      bottom: 10px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px;
-      color: #7d8590;
+      transform: translate(-50%, -50%);
+      color: #484f58;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.8;
       pointer-events: none;
-      white-space: nowrap;
     }
   </style>
 </head>
@@ -217,12 +231,15 @@
     </div>
   </header>
 
-  <pre id="status">initializing...</pre>
+  <pre id="status">loading engine (this may take 30–60 s on first visit)…</pre>
 
   <div class="canvas-container">
-    <div class="canvas-wrapper">
+    <div class="canvas-wrapper" id="overlay-wrapper">
       <span class="canvas-label">2D Overlay</span>
       <canvas id="output-overlay"></canvas>
+      <!-- video preview inset (shown once a source is selected) -->
+      <video id="video" autoplay muted playsinline></video>
+      <div id="hint">← Select an input source above<br>then enable Face / Body / Hand</div>
     </div>
     <div class="canvas-wrapper">
       <span class="canvas-label">3D Scene</span>
@@ -230,7 +247,33 @@
     </div>
   </div>
 
-  <video id="video" autoplay muted playsinline></video>
+  <input type="file" id="file-input" accept="video/*" style="display:none">
+
+  <!-- Error display & auto-play fix (runs before the main module) -->
+  <script>
+    // Surface any JS errors in the status bar so they're visible
+    window.addEventListener('error', function(e) {
+      var s = document.getElementById('status');
+      if (s) { s.innerText = 'JS error: ' + e.message; s.className = 'error'; }
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      var s = document.getElementById('status');
+      if (s) { s.innerText = 'Error: ' + (e.reason && e.reason.message || e.reason); s.className = 'error'; }
+    });
+
+    // Auto-play video when any source is loaded (samples, uploads)
+    // Uses addEventListener so it doesn't conflict with the compiled app's onloadeddata handler
+    var _vid = document.getElementById('video');
+    _vid.addEventListener('loadeddata', function() {
+      this.style.display = 'block';               // show the preview inset
+      document.getElementById('hint').style.display = 'none';
+      this.play().catch(function() {});            // start playback → triggers detection loop
+    });
+    _vid.addEventListener('play', function() {
+      this.style.display = 'block';
+      document.getElementById('hint').style.display = 'none';
+    });
+  </script>
 
   <script type="module" src="dist/index.js"></script>
 </body>
