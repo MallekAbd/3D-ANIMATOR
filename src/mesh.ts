@@ -138,7 +138,7 @@ export async function drawFace(result: H.FaceResult, scale: [number, number], us
   if (!t.initialized) centerCamera(1000, result.meshRaw); // first draw
 
   if (previousSmooth !== smooth) {
-    meshes.face.dispose();
+    if (meshes.face) meshes.face.dispose();
     previousSmooth = smooth;
   }
 
