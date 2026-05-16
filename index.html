@@ -71,132 +71,156 @@
       font-size: 13px;
       outline: none;
     }
-
     select#input:hover { border-color: #58a6ff; }
 
-    .divider {
-      width: 1px;
-      height: 20px;
-      background: #30363d;
-    }
+    .divider { width: 1px; height: 20px; background: #30363d; }
 
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    .checkbox-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
     label {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      user-select: none;
-      color: #8b949e;
-      font-size: 13px;
+      display: flex; align-items: center; gap: 5px;
+      cursor: pointer; user-select: none;
+      color: #8b949e; font-size: 13px;
       transition: color 0.15s;
     }
-
     label:hover { color: #e6edf3; }
 
     input[type="checkbox"] {
       accent-color: #58a6ff;
-      cursor: pointer;
-      width: 13px;
-      height: 13px;
+      cursor: pointer; width: 13px; height: 13px;
     }
 
     #highlight {
-      background: #388bfd22;
-      color: #58a6ff;
-      border: 1px solid #388bfd55;
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-size: 11px;
-      letter-spacing: 0.5px;
+      background: #388bfd22; color: #58a6ff;
+      border: 1px solid #388bfd55; border-radius: 4px;
+      padding: 2px 8px; font-size: 11px; letter-spacing: 0.5px;
       visibility: hidden;
     }
 
     #status {
-      background: #0d1117;
-      color: #7d8590;
-      font-family: 'Courier New', monospace;
-      font-size: 11px;
-      padding: 4px 20px;
-      border-bottom: 1px solid #21262d;
-      min-height: 24px;
-      flex-shrink: 0;
-      white-space: pre;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      background: #0d1117; color: #7d8590;
+      font-family: 'Courier New', monospace; font-size: 11px;
+      padding: 4px 20px; border-bottom: 1px solid #21262d;
+      min-height: 24px; flex-shrink: 0;
+      white-space: pre; overflow: hidden; text-overflow: ellipsis;
     }
-
     #status.error { color: #f85149; }
 
+    /* Main layout: canvases + right side panel */
+    .main {
+      display: flex; flex: 1; min-height: 0;
+    }
     .canvas-container {
-      display: flex;
-      flex: 1;
-      min-height: 0;
-      gap: 1px;
-      background: #21262d;
+      display: flex; flex: 1; min-width: 0;
+      gap: 1px; background: #21262d;
     }
-
     .canvas-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      background: #000;
-      position: relative;
-      overflow: hidden;
+      flex: 1; display: flex; flex-direction: column;
+      background: #000; position: relative; overflow: hidden;
     }
-
     .canvas-label {
-      position: absolute;
-      top: 8px;
-      left: 10px;
-      font-size: 10px;
-      color: #7d8590;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      pointer-events: none;
-      z-index: 10;
+      position: absolute; top: 8px; left: 10px;
+      font-size: 10px; color: #7d8590;
+      letter-spacing: 1px; text-transform: uppercase;
+      pointer-events: none; z-index: 10;
     }
+    canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-    canvas {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    /* Video preview: small inset bottom-left of overlay canvas */
     #video {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      width: 160px;
-      height: auto;
-      border: 1px solid #30363d;
-      border-radius: 4px;
-      z-index: 20;
-      background: #000;
-      display: none; /* shown via JS once loaded */
+      position: absolute; bottom: 8px; left: 8px;
+      width: 140px; height: auto;
+      border: 1px solid #30363d; border-radius: 4px;
+      z-index: 20; background: #000;
+      display: none;
     }
-
-    #file-input { display: none; }
 
     #hint {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      color: #484f58;
-      font-size: 12px;
-      text-align: center;
-      line-height: 1.8;
+      color: #484f58; font-size: 12px;
+      text-align: center; line-height: 1.8;
       pointer-events: none;
     }
+
+    /* --- Analysis side panel --- */
+    .side-panel {
+      width: 280px; flex-shrink: 0;
+      background: #161b22; border-left: 1px solid #30363d;
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .panel-section {
+      padding: 14px 16px;
+      border-bottom: 1px solid #21262d;
+    }
+    .panel-title {
+      font-size: 10px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: #7d8590;
+      margin-bottom: 10px;
+    }
+    .score-row {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .score-badge {
+      width: 64px; height: 64px;
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #fff; flex-shrink: 0;
+      background: #30363d;
+    }
+    .score-badge .num { font-size: 24px; font-weight: 700; line-height: 1; }
+    .score-badge .lbl { font-size: 9px; letter-spacing: 1px; margin-top: 3px; opacity: 0.85; }
+    .score-meta { flex: 1; min-width: 0; }
+    .score-meta .level { font-size: 15px; font-weight: 600; color: #e6edf3; }
+    .score-meta .action { font-size: 11px; color: #7d8590; margin-top: 3px; line-height: 1.35; }
+
+    .angle-grid {
+      display: grid; grid-template-columns: 1fr auto auto;
+      gap: 4px 12px; margin-top: 12px; font-size: 11px;
+    }
+    .angle-grid .lbl { color: #7d8590; }
+    .angle-grid .val { color: #e6edf3; font-family: 'Courier New', monospace; }
+    .angle-grid .sc  { color: #58a6ff; font-family: 'Courier New', monospace; }
+
+    .emo-list {
+      margin-top: 10px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .emo-row {
+      display: grid; grid-template-columns: 60px 1fr 32px;
+      align-items: center; gap: 8px;
+      font-size: 11px;
+    }
+    .emo-row .name { color: #8b949e; text-transform: capitalize; }
+    .emo-bar {
+      height: 6px; background: #21262d; border-radius: 3px;
+      overflow: hidden;
+    }
+    .emo-bar .fill {
+      height: 100%; background: #58a6ff; transition: width 0.2s;
+    }
+    .emo-row .pct {
+      color: #7d8590; font-family: 'Courier New', monospace;
+      text-align: right; font-size: 10px;
+    }
+
+    .panel-empty {
+      font-size: 11px; color: #484f58;
+      font-style: italic; line-height: 1.5;
+    }
+
+    .report-btn {
+      width: 100%;
+      background: linear-gradient(180deg, #2ea043, #25813a);
+      color: #fff; border: none; border-radius: 6px;
+      padding: 10px 14px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: filter 0.15s;
+    }
+    .report-btn:hover { filter: brightness(1.1); }
+    .report-btn:active { filter: brightness(0.95); }
+    .report-btn:disabled { opacity: 0.4; cursor: not-allowed; filter: none; }
   </style>
 </head>
 <body>
@@ -204,24 +228,20 @@
     <h1>3D Animator <small>ergonomic assessment</small></h1>
     <div class="controls">
       <select id="input"></select>
-      <input type="file" id="file-input" accept="video/*">
+      <input type="file" id="file-input" accept="video/*" style="display:none">
 
       <div class="checkbox-group">
         <label><input type="checkbox" id="face"> Face</label>
         <label><input type="checkbox" id="body"> Body</label>
         <label><input type="checkbox" id="hand"> Hand</label>
       </div>
-
       <div class="divider"></div>
-
       <div class="checkbox-group">
         <label><input type="checkbox" id="points"> Points</label>
         <label><input type="checkbox" id="outlines" checked> Outlines</label>
         <label><input type="checkbox" id="meshes"> Meshes</label>
       </div>
-
       <div class="divider"></div>
-
       <div class="checkbox-group">
         <label><input type="checkbox" id="wireframe"> Wireframe</label>
         <label><input type="checkbox" id="smooth" checked> Smooth</label>
@@ -233,46 +253,167 @@
 
   <pre id="status">loading engine (this may take 30–60 s on first visit)…</pre>
 
-  <div class="canvas-container">
-    <div class="canvas-wrapper" id="overlay-wrapper">
-      <span class="canvas-label">2D Overlay</span>
-      <canvas id="output-overlay"></canvas>
-      <!-- video preview inset (shown once a source is selected) -->
-      <video id="video" autoplay muted playsinline></video>
-      <div id="hint">← Select an input source above<br>then enable Face / Body / Hand</div>
+  <div class="main">
+    <div class="canvas-container">
+      <div class="canvas-wrapper">
+        <span class="canvas-label">2D Overlay</span>
+        <canvas id="output-overlay"></canvas>
+        <video id="video" autoplay muted playsinline></video>
+        <div id="hint">← Select an input source above<br>then enable Face / Body / Hand</div>
+      </div>
+      <div class="canvas-wrapper">
+        <span class="canvas-label">3D Scene</span>
+        <canvas id="output-mesh"></canvas>
+      </div>
     </div>
-    <div class="canvas-wrapper">
-      <span class="canvas-label">3D Scene</span>
-      <canvas id="output-mesh"></canvas>
-    </div>
+
+    <!-- Analysis side panel -->
+    <aside class="side-panel">
+      <div class="panel-section">
+        <div class="panel-title">REBA · Posture Risk</div>
+        <div id="reba-content">
+          <div class="panel-empty">Enable <b>Body</b> detection to compute REBA score.</div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-title">Affective State</div>
+        <div id="anxiety-content">
+          <div class="panel-empty">Enable <b>Face</b> detection to estimate stress / anxiety.</div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <button id="report-btn" class="report-btn" disabled>Generate PDF Report</button>
+        <div style="font-size: 10px; color: #484f58; margin-top: 8px; line-height: 1.5;">
+          Captures current scores plus snapshots of both canvases. Enable Face or Body detection to unlock.
+        </div>
+      </div>
+    </aside>
   </div>
 
-  <input type="file" id="file-input" accept="video/*" style="display:none">
-
-  <!-- Error display & auto-play fix (runs before the main module) -->
+  <!-- Error display & video auto-play -->
   <script>
-    // Surface any JS errors in the status bar so they're visible
-    window.addEventListener('error', function(e) {
+    window.addEventListener('error', function (e) {
       var s = document.getElementById('status');
       if (s) { s.innerText = 'JS error: ' + e.message; s.className = 'error'; }
     });
-    window.addEventListener('unhandledrejection', function(e) {
+    window.addEventListener('unhandledrejection', function (e) {
       var s = document.getElementById('status');
       if (s) { s.innerText = 'Error: ' + (e.reason && e.reason.message || e.reason); s.className = 'error'; }
     });
 
-    // Auto-play video when any source is loaded (samples, uploads)
-    // Uses addEventListener so it doesn't conflict with the compiled app's onloadeddata handler
     var _vid = document.getElementById('video');
-    _vid.addEventListener('loadeddata', function() {
-      this.style.display = 'block';               // show the preview inset
-      document.getElementById('hint').style.display = 'none';
-      this.play().catch(function() {});            // start playback → triggers detection loop
-    });
-    _vid.addEventListener('play', function() {
+    _vid.addEventListener('loadeddata', function () {
       this.style.display = 'block';
-      document.getElementById('hint').style.display = 'none';
+      var h = document.getElementById('hint'); if (h) h.style.display = 'none';
+      this.play().catch(function () {});
     });
+    _vid.addEventListener('play', function () {
+      this.style.display = 'block';
+      var h = document.getElementById('hint'); if (h) h.style.display = 'none';
+    });
+  </script>
+
+  <!-- Analysis modules + jsPDF for report -->
+  <script src="assets/reba.js"></script>
+  <script src="assets/anxiety.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="assets/report.js"></script>
+
+  <!-- Bind analysis panel to the detection event dispatched by the app -->
+  <script>
+    (function () {
+      var latest = { reba: null, anxiety: null };
+      var rebaEl    = document.getElementById('reba-content');
+      var anxEl     = document.getElementById('anxiety-content');
+      var reportBtn = document.getElementById('report-btn');
+
+      function renderReba(r) {
+        if (!r) {
+          rebaEl.innerHTML = '<div class="panel-empty">Body detected, awaiting stable pose…</div>';
+          return;
+        }
+        var html = '' +
+          '<div class="score-row">' +
+            '<div class="score-badge" style="background:' + r.risk.color + '">' +
+              '<div class="num">' + r.score + '</div>' +
+              '<div class="lbl">REBA</div>' +
+            '</div>' +
+            '<div class="score-meta">' +
+              '<div class="level">' + r.risk.level + ' Risk</div>' +
+              '<div class="action">' + r.risk.action + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="angle-grid">' +
+            '<span class="lbl">Trunk</span>'    + '<span class="val">' + r.angles.trunk    + '°</span><span class="sc">' + r.breakdown.trunk    + '</span>' +
+            '<span class="lbl">Neck</span>'     + '<span class="val">' + r.angles.neck     + '°</span><span class="sc">' + r.breakdown.neck     + '</span>' +
+            '<span class="lbl">Upper arm</span>'+ '<span class="val">' + r.angles.upperArm + '°</span><span class="sc">' + r.breakdown.upperArm + '</span>' +
+            '<span class="lbl">Lower arm</span>'+ '<span class="val">' + r.angles.lowerArm + '°</span><span class="sc">' + r.breakdown.lowerArm + '</span>' +
+          '</div>';
+        rebaEl.innerHTML = html;
+      }
+
+      function renderAnxiety(a) {
+        if (!a) {
+          anxEl.innerHTML = '<div class="panel-empty">Face detected, awaiting emotion model…</div>';
+          return;
+        }
+        var bars = '';
+        var sorted = a.emotions.slice().sort(function (x, y) { return y.score - x.score; });
+        for (var i = 0; i < sorted.length; i++) {
+          var e = sorted[i];
+          var pct = Math.round(e.score * 100);
+          bars +=
+            '<div class="emo-row">' +
+              '<span class="name">' + e.emotion + '</span>' +
+              '<div class="emo-bar"><div class="fill" style="width:' + pct + '%"></div></div>' +
+              '<span class="pct">' + pct + '%</span>' +
+            '</div>';
+        }
+        anxEl.innerHTML = '' +
+          '<div class="score-row">' +
+            '<div class="score-badge" style="background:' + a.state.color + '">' +
+              '<div class="num">' + a.percent + '%</div>' +
+              '<div class="lbl">STRESS</div>' +
+            '</div>' +
+            '<div class="score-meta">' +
+              '<div class="level">' + a.state.label + '</div>' +
+              '<div class="action">Dominant: ' + a.dominant.emotion +
+              ' (' + Math.round(a.dominant.score * 100) + '%)</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="emo-list">' + bars + '</div>';
+      }
+
+      window.addEventListener('appdetection', function (ev) {
+        var det = ev.detail;
+        if (!det) return;
+
+        // REBA from body
+        if (det.body && det.body.length > 0) {
+          var r = window.REBA && window.REBA.compute(det.body[0]);
+          if (r) { latest.reba = r; renderReba(r); }
+          else renderReba(null);
+        } else if (latest.reba) {
+          // keep last
+        } else {
+          rebaEl.innerHTML = '<div class="panel-empty">Enable <b>Body</b> detection to compute REBA score.</div>';
+        }
+
+        // Anxiety from face
+        if (det.face && det.face.length > 0 && det.face[0].emotion && det.face[0].emotion.length) {
+          var a = window.Anxiety && window.Anxiety.compute(det.face[0]);
+          if (a) { latest.anxiety = a; renderAnxiety(a); }
+        } else if (!latest.anxiety) {
+          anxEl.innerHTML = '<div class="panel-empty">Enable <b>Face</b> detection to estimate stress / anxiety.</div>';
+        }
+
+        reportBtn.disabled = !(latest.reba || latest.anxiety);
+      });
+
+      reportBtn.addEventListener('click', function () {
+        if (window.ReportPDF) window.ReportPDF.generate(latest);
+      });
+    })();
   </script>
 
   <script type="module" src="dist/index.js"></script>
