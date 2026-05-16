@@ -384,27 +384,38 @@
           '<div class="emo-list">' + bars + '</div>';
       }
 
+      var _diagCount = 0;
       window.addEventListener('appdetection', function (ev) {
+        _diagCount++;
         var det = ev.detail;
         if (!det) return;
 
+        var bodyN = (det.body && det.body.length) || 0;
+        var faceN = (det.face && det.face.length) || 0;
+
         // REBA from body
-        if (det.body && det.body.length > 0) {
-          var r = window.REBA && window.REBA.compute(det.body[0]);
-          if (r) { latest.reba = r; renderReba(r); }
-          else renderReba(null);
-        } else if (latest.reba) {
-          // keep last
-        } else {
-          rebaEl.innerHTML = '<div class="panel-empty">Enable <b>Body</b> detection to compute REBA score.</div>';
+        if (bodyN > 0) {
+          try {
+            var r = window.REBA && window.REBA.compute(det.body[0]);
+            if (r) { latest.reba = r; renderReba(r); }
+            else { rebaEl.innerHTML = '<div class="panel-empty">Body detected but keypoints incomplete (ev#' + _diagCount + ', kpts=' + (det.body[0].keypoints ? det.body[0].keypoints.length : 0) + ').</div>'; }
+          } catch (err) {
+            rebaEl.innerHTML = '<div class="panel-empty">REBA error: ' + err.message + '</div>';
+          }
+        } else if (!latest.reba) {
+          rebaEl.innerHTML = '<div class="panel-empty">Waiting for body data… (ev#' + _diagCount + ', body=' + bodyN + ')</div>';
         }
 
         // Anxiety from face
-        if (det.face && det.face.length > 0 && det.face[0].emotion && det.face[0].emotion.length) {
-          var a = window.Anxiety && window.Anxiety.compute(det.face[0]);
-          if (a) { latest.anxiety = a; renderAnxiety(a); }
+        if (faceN > 0 && det.face[0].emotion && det.face[0].emotion.length) {
+          try {
+            var a = window.Anxiety && window.Anxiety.compute(det.face[0]);
+            if (a) { latest.anxiety = a; renderAnxiety(a); }
+          } catch (err2) {
+            anxEl.innerHTML = '<div class="panel-empty">Anxiety error: ' + err2.message + '</div>';
+          }
         } else if (!latest.anxiety) {
-          anxEl.innerHTML = '<div class="panel-empty">Enable <b>Face</b> detection to estimate stress / anxiety.</div>';
+          anxEl.innerHTML = '<div class="panel-empty">Waiting for face emotion… (ev#' + _diagCount + ', face=' + faceN + ')</div>';
         }
 
         reportBtn.disabled = !(latest.reba || latest.anxiety);
